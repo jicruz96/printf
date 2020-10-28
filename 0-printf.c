@@ -18,6 +18,8 @@ int _printf(const char *format, ...)
 	va_start(arguments, format);
 	buffer = adjust_buffer(NULL, &buffer_size, KB);
 	string = adjust_buffer(NULL, &string_size, KB);
+	if (string == NULL || buffer == NULL)
+		return (-1);
 
 	for (i = 0, j = 0; *format; format++)
 	{

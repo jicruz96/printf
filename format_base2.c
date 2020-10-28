@@ -14,7 +14,9 @@ int format_base2(char *buf, int *size, va_list args, settings_t settings)
 	int hex_shift = get_hex_shift(settings), power = get_power(settings),
 		digit, i = 0, shift = 63 - (63 % power), mapper = get_mapper(settings);
 
-	adjust_buffer(buf, size, 20);
+	buf = adjust_buffer(buf, size, 20);
+	if (buf == NULL)
+		return (-1);
 
 	if (settings.hash || settings.type == 'p')
 	{

@@ -15,8 +15,9 @@ int format_uint(char *buf, int *size, va_list args, settings_t settings)
 
 	(void)settings;
 
-	adjust_buffer(buf, size, 21);
-
+	buf = adjust_buffer(buf, size, 21);
+	if (buf == NULL)
+		return (-1);
 	if (n < 10)
 	{
 		buf[0] = n + '0';

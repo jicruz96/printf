@@ -22,7 +22,9 @@ int format_non_print(char *buf, int *size, va_list args, settings_t settings)
 		else
 			tmp += 1;
 
-	adjust_buffer(buf, size, tmp);
+	buf = adjust_buffer(buf, size, tmp);
+	if (buf == NULL)
+		return (-1);
 
 	for (i = 0, j = 0; string[i]; i++)
 	{

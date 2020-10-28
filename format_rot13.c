@@ -21,7 +21,9 @@ int format_rot13(char *buf, int *size, va_list args, settings_t settings)
 
 	string_length = _strlen(string);
 
-	adjust_buffer(buf, size, string_length + 1);
+	buf = adjust_buffer(buf, size, string_length + 1);
+	if (buf == NULL)
+		return (-1);
 
 	for (i = 0; i < string_length; i++)
 	{

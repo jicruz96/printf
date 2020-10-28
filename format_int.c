@@ -15,7 +15,9 @@ int format_int(char *buf, int *size, va_list args, settings_t settings)
 	int tmp;
 	int magnitude;
 
-	adjust_buffer(buf, size, 20);
+	buf = adjust_buffer(buf, size, 20);
+	if (buf == NULL)
+		return (-1);
 
 	if (n == INT_MIN)
 	{

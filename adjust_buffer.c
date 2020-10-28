@@ -13,6 +13,8 @@ char *adjust_buffer(char *buffer, int *buffer_size, int desired_size)
 	{
 		*buffer_size += KB;
 		buffer = realloc(buffer, *buffer_size);
+		if (buffer == NULL)
+			return (NULL);
 		_memset(buffer + *buffer_size - KB, 0, KB);
 	}
 	return (buffer);

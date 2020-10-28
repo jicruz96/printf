@@ -25,7 +25,9 @@ int get_formatted_string(char *buf, int *size, const char **f, va_list args)
 
 	if (**f != '%')
 	{
-		adjust_buffer(buf, size, 2);
+		buf = adjust_buffer(buf, size, 2);
+		if (buf == NULL)
+			return (-1);
 		*buf = **f;
 		*(buf + 1) = '\0';
 		return (1);
@@ -42,7 +44,9 @@ int get_formatted_string(char *buf, int *size, const char **f, va_list args)
 		return (-1);
 
 	i = 0;
-	adjust_buffer(buf, size, 3);
+	buf = adjust_buffer(buf, size, 3);
+	if (buf == NULL)
+		return (-1);
 	buf[i++] = '%';
 	if (**f != '%')
 		buf[i++] = **f;
