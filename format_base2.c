@@ -19,6 +19,12 @@ int format_base2(char *buf, int *size, va_list args, settings_t settings)
 	if (buf == NULL)
 		return (-1);
 
+	if (settings.type == 'p' && n == 0)
+	{
+		_strncpy(buf, "(nil)", 5);
+		return (5);
+	}
+
 	if (settings.hash || settings.type == 'p')
 	{
 		buf[i++] = '0';
