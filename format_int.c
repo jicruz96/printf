@@ -13,7 +13,7 @@ int format_int(char *buf, int *size, va_list args, settings_t settings)
 	int n = va_arg(args, int);
 	int i = 0;
 	int tmp;
-	int magnitude = 0;
+	int magnitude;
 
 	adjust_buffer(buf, size, 20);
 
@@ -41,10 +41,10 @@ int format_int(char *buf, int *size, va_list args, settings_t settings)
 		}
 	}
 
-	for (tmp = n; tmp; magnitude = magnitude ? magnitude * 10 : 1)
-		tmp /= 10;
+	for (tmp = n, magnitude = 1; tmp > 9; tmp /= 10)
+		magnitude *= 10;
 
-	for (; n; n = n % magnitude, magnitude /= 10, i++)
+	for (; magnitude; n = n % magnitude, magnitude /= 10, i++)
 		buf[i] = n / magnitude + '0';
 
 	buf[i] = '\0';
