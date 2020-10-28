@@ -10,7 +10,7 @@
  **/
 int format_uint(char *buf, int *size, va_list args, settings_t settings)
 {
-	int i, n = va_arg(args, unsigned int);
+	unsigned int i, n = va_arg(args, unsigned int);
 	unsigned int magnitude;
 
 	(void)settings;
