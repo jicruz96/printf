@@ -8,7 +8,7 @@
  **/
 int _printf(const char *format, ...)
 {
-	int i, j, string_length, buffer_size = 0, string_size = 0;
+	int i, j, k, string_length, buffer_size = 0, string_size = 0;
 	char *buffer, *string;
 	va_list arguments;
 
@@ -21,9 +21,15 @@ int _printf(const char *format, ...)
 
 	for (i = 0, j = 0; *format; format++)
 	{
-		j += get_formatted_string(string, &string_size, &format, arguments);
+		k = get_formatted_string(string, &string_size, &format, arguments);
+		if (k == -1)
+		{
+			j = k;
+			break;
+		}
+		j += k;
 		string_length = _strlen(string);
-		adjust_buffer(buffer, &buffer_size, i + string_length);
+		buffer = adjust_buffer(buffer, &buffer_size, i + string_length);
 		_strncpy(buffer + i, string, string_length);
 		i = i + string_length;
 	}
