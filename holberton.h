@@ -1,25 +1,19 @@
-#ifndef _HOLBERTON_H
-#define _HOLBERTON_H
+#ifndef FUNCTION_DECLARATIONS
+#define FUNCTION_DECLARATIONS
 
-/* HEADER FILES */
 #include <stdarg.h>
-#include <unistd.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <limits.h>
+#include <stdio.h>
 
-/* PRE-PROCESSOR DIRECTIVES */
-#define is_alpha(a) ((a >= 'A' && a <= 'Z') || (a >= 'a' && a <= 'z'))
-#define max(a, b) ((a) > (b) ? (a) : (b))
-#define min(a, b) ((a) < (b) ? (a) : (b))
-#define is_digit(a) ((a) >= '0' && (a) <= '9')
-#define add_times_user_tried_printing_a_null_byte(a) p_c(0, &a)
+#define KB 100
+#define is_digit(a) (a >= '0' && a <= '9')
 #define true 1
 #define false 0
 
-/* STRUCTS */
-
 /**
- * struct str_list_s - node of list of strings and their format specifications
+ * struct settings_s - struct of format specifications for _printf argument
  * @str:		string
  * @type:		string type (e.g. s in '%s', c in '%c')
  * @len:		if 1, print long int. if -1, print short int.
@@ -32,11 +26,9 @@
  * @width:		minimum number of chars to print
  * @has_max:	has a precision value
  * @precision:	maximum number of chars to print
- * @next:		pointer to next str_list node
  **/
-typedef struct str_list_s
+typedef struct settings_s
 {
-	char *str;
 	int type;
 	int len;
 	int minus;
@@ -48,45 +40,38 @@ typedef struct str_list_s
 	int width;
 	int has_max;
 	int precision;
-	struct str_list_s *next;
-} str_list;
+} settings_t;
 
 /**
- * struct p_dict_s - matches a format specifier with a printer
- * @type:	allowable format specifiers for...
- * @printer:		...this specific printer
+ * struct printer_dict_s - printer dictionary struct
+ * @formats: format specifier type associated with the printer function
+ * @printer: the printer function associated with formats
  **/
-typedef struct p_dict_s
+typedef struct printer_dict_s
 {
-	char *type;
-	char *(*printer)(va_list, str_list *);
-} print_dict;
+	char *formats;
+	int (*printer)(char *, int *, va_list, settings_t);
+} printer_dict_t;
 
-/* MAIN FUNCTIONS  (0-printf.c) */
+int _strlen(const char *string);
+char *_memset(char *buffer, char value, int n);
+char *_strncpy(char *destination, const char *source, int n);
 int _printf(const char *format, ...);
-int build_str_list(str_list **, va_list, const char *);
-int add_str(str_list **, const char **, const char *, va_list);
-char *get_string(str_list *, const char *, va_list);
-char *strncopy_list(str_list *, int);
+char *adjust_buffer(char *buffer, int *buffer_size, int desired_size);
+int get_formatted_string(char *buf, int *size, const char **f, va_list args);
+int format_char(char *buf, int *size, va_list args, settings_t settings);
+int format_string(char *buf, int *size, va_list args, settings_t settings);
+int format_int(char *buf, int *size, va_list args, settings_t settings);
+int format_uint(char *buf, int *size, va_list args, settings_t settings);
+int format_binary(char *buf, int *size, va_list args, settings_t settings);
+int format_base2(char *buf, int *size, va_list args, settings_t settings);
+int format_non_print(char *buf, int *size, va_list args, settings_t settings);
+int format_reverse(char *buf, int *size, va_list args, settings_t settings);
+int format_rot13(char *buf, int *size, va_list args, settings_t settings);
+settings_t get_settings(const char **format);
 
-/* INT PRINTER FUNCTIONS (1-num_printers.c) */
-char *p_num(va_list, str_list *);
-char *p_c(int, int *);
-char *p_base2(unsigned long int, str_list *);
-char *p_base10(unsigned long int, str_list *);
+int get_mapper(settings_t settings);
+int get_power(settings_t settings);
+int get_hex_shift(settings_t settings);
 
-/* STR PRINTER FUNCTIONS (2-str_printers.c) */
-char *p_s(va_list, str_list *);
-char *rev_string(char *);
-char *rot13(char *);
-char *p_S(char *);
-char *p_mod(va_list, str_list *);
-
-/* HELPER FUNCTIONS (3-helpers.c) */
-char *_strchr(char *, char);
-char *_strdup(char *);
-size_t _strlen(char *);
-void free_strlist(str_list *);
-str_list *new_str_list_node(void);
-
-#endif /* HOLBERTON_H */
+#endif /* FUNCTION_DECLARATIONS */
