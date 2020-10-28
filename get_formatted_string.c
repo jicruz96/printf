@@ -40,13 +40,10 @@ int get_formatted_string(char *buf, int *size, const char **f, va_list args)
 			if (printers[i].formats[j] == **f)
 				return (printers[i].printer(buf, size, args, settings));
 
-	if (**f == '\0')
-		return (-1);
-
-	i = 0;
 	buf = adjust_buffer(buf, size, 3);
-	if (buf == NULL)
+	if (buf == NULL || **f == '\0')
 		return (-1);
+	i = 0;
 	buf[i++] = '%';
 	if (**f != '%')
 		buf[i++] = **f;
