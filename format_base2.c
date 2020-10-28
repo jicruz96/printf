@@ -24,8 +24,7 @@ int format_base2(char *buf, int *size, va_list args, settings_t settings)
 		_strncpy(buf, "(nil)", 5);
 		return (5);
 	}
-
-	if (settings.hash || settings.type == 'p')
+	if ((settings.hash || settings.type == 'p') && n != 0)
 	{
 		buf[i++] = '0';
 
@@ -46,7 +45,6 @@ int format_base2(char *buf, int *size, va_list args, settings_t settings)
 		buf[i++] = digit + '0';
 		shift -= power;
 	}
-
 	buf[i] = '\0';
 	return (i);
 }
