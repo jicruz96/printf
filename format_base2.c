@@ -12,7 +12,8 @@ int format_base2(char *buf, int *size, va_list args, settings_t settings)
 {
 	unsigned long int n = va_arg(args, unsigned long int);
 	int hex_shift = get_hex_shift(settings), power = get_power(settings),
-		digit, i = 0, shift = 63 - (63 % power), mapper = get_mapper(settings);
+		shift = get_shift(settings), mapper = get_mapper(settings);
+	int digit, i = 0;
 
 	buf = adjust_buffer(buf, size, 20);
 	if (buf == NULL)
@@ -73,7 +74,7 @@ int get_power(settings_t settings)
 }
 
 /**
- * get_hex_shift - gets jex_shift value for format_base2 function
+ * get_hex_shift - gets hex_shift value for format_base2 function
  * @settings: settings struct
  * Return: hex_shift value
  **/
@@ -84,4 +85,23 @@ int get_hex_shift(settings_t settings)
 	if (settings.type == 'x' || settings.type == 'p')
 		return (39);
 	return (7);
+}
+
+/**
+ * get_shift - gets _shift value for format_base2 function
+ * @settings: settings struct
+ * Return: shift value
+ **/
+int get_shift(settings_t settings)
+{
+	if (settings.type == 'p')
+		return (60);
+
+	if (settings.type == 'b')
+		return (31);
+
+	if (settings.type == 'o')
+		return (30);
+
+	return (28);
 }

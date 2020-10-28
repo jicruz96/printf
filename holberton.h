@@ -69,6 +69,7 @@ int format_non_print(char *buf, int *size, va_list args, settings_t settings);
 int format_reverse(char *buf, int *size, va_list args, settings_t settings);
 int format_rot13(char *buf, int *size, va_list args, settings_t settings);
 settings_t get_settings(const char **format);
+int get_shift(settings_t settings);
 
 int get_mapper(settings_t settings);
 int get_power(settings_t settings);
