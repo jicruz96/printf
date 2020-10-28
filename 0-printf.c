@@ -32,6 +32,11 @@ int _printf(const char *format, ...)
 		j += k;
 		string_length = _strlen(string);
 		buffer = adjust_buffer(buffer, &buffer_size, i + string_length);
+		if (buffer == NULL)
+		{
+			j = -1;
+			break;
+		}
 		_strncpy(buffer + i, string, string_length);
 		i = i + string_length;
 	}
