@@ -11,8 +11,8 @@
 int format_base2(char *buf, int *size, va_list args, settings_t settings)
 {
 	unsigned long int n = va_arg(args, unsigned long int);
-	int digit, i = 0, shift = 63, hex_shift = get_hex_shift(settings),
-			   power = get_power(settings), mapper = get_mapper(settings);
+	int hex_shift = get_hex_shift(settings), power = get_power(settings),
+		digit, i = 0, shift = 63 - (63 % power), mapper = get_mapper(settings);
 
 	adjust_buffer(buf, size, 20);
 
@@ -25,15 +25,6 @@ int format_base2(char *buf, int *size, va_list args, settings_t settings)
 		else if (settings.type == 'X')
 			buf[i++] = 'X';
 	}
-
-	if (n == 0)
-	{
-		buf[i++] = '0';
-		buf[i] = '\0';
-		return (i);
-	}
-
-	shift -= shift % power;
 
 	while (shift > 0 && !((n >> shift) & mapper))
 		shift -= power;
