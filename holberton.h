@@ -7,7 +7,7 @@
 #include <limits.h>
 #include <stdio.h>
 
-#define KB 100
+#define KB 1024
 #define is_digit(a) (a >= '0' && a <= '9')
 #define true 1
 #define false 0
